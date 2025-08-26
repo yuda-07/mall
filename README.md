@@ -70,5 +70,110 @@ npm run prisma:migrate
 app.use((req,res,next)=>{res.set("Cache-Control","no-store");res.set("Pragma","no-cache");res.set("Expires","0");next();});
 3.5 Jalankan
 npm run dev
-# uji
+uji
 curl http://localhost:4000/health
+
+# 4) Setup Frontend (React + Vite)
+    4.1 Base URL API
+    
+    Frontend/.env
+    
+    VITE_API_BASE=http://localhost:4000
+    
+    4.2 Helper fetch tanpa cache
+    
+    src/utils/api.js
+    
+    export const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+    const u = (p, q={}) => {
+      const url = new URL(p.replace(/^\//,''), API_BASE + '/');
+      Object.entries(q).forEach(([k,v])=> (v??false) !== false && url.searchParams.set(k, v));
+      return url.toString();
+    };
+    export async function getJSON(path, params){
+      const res = await fetch(u(path, {...params, _ts: Date.now()}), { cache: 'no-store', headers: { 'Accept':'application/json','Cache-Control':'no-store' }});
+      if(!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+    export async function postJSON(path, body){
+      const res = await fetch(u(path), { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body||{}), cache:'no-store' });
+      if(!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+    
+    4.3 Integrasi halaman Transaksi
+    
+    Cari tiket → GET /api/masuk/:kode (bukan MOCK).
+    
+    Bayar → POST /api/transaksi/pay.
+    
+    Contoh ringkas:
+    
+    // Cari
+    const d = await getJSON(`/api/masuk/${encodeURIComponent(kode)}`);
+    // Bayar
+    await postJSON("/api/transaksi/pay", { kode, gateOut, metode, tunaiDiterima });
+
+5) Alur Pakai (End-to-End)
+5.1 Gate-In (buat tiket)
+
+PowerShell (Invoke-RestMethod):
+
+$json=@'
+{ "kode":"A1B253", "jenis":"Mobil", "plat":"B 1234 CD", "gateIn":"Pintu Masuk B" }
+'@
+irm http://localhost:4000/api/masuk -Method Post -ContentType 'application/json' -Body $json
+
+5.2 Transaksi Pembayaran (Gate-Out)
+$json=@'
+{ "kode":"A1B253", "gateOut":"Pintu Keluar A", "metode":"CASH", "tunaiDiterima":20000 }
+'@
+irm http://localhost:4000/api/transaksi/pay -Method Post -ContentType 'application/json' -Body $json
+
+5.3 Rekap & Grafik
+# Rekap Masuk (hari ini)
+irm http://localhost:4000/api/masuk
+
+# Rekap Keluar (hari ini)
+irm http://localhost:4000/api/transaksi/keluar
+
+# Pendapatan Mingguan (untuk Chart.js)
+irm "http://localhost:4000/api/statistik/pendapatan?range=week"
+
+6) Ringkasan Endpoint
+
+POST /api/masuk → catat gate-in.
+
+GET /api/masuk?start&end → rekap masuk (default hari ini).
+
+GET /api/masuk/:kode → lookup tiket (dipakai halaman Transaksi → “Cari”).
+
+POST /api/transaksi/pay → proses bayar + gate-out.
+
+GET /api/transaksi/keluar?start&end → rekap keluar (default hari ini).
+
+GET /api/statistik/pendapatan?range=today|week|custom&start&end → data grafik.
+
+7) Troubleshooting Singkat
+
+P1000 (auth gagal) → periksa user/password, gunakan host 127.0.0.1, encode password saja.
+
+P1001 (tidak bisa connect) → MySQL belum start / port salah (3306/3307).
+
+PowerShell “-X/-H/-d” tidak dikenal → gunakan irm (Invoke-RestMethod) atau curl.exe.
+
+UI “Data struk tidak ditemukan” → pastikan:
+
+Kode yang dicari ada (GET /api/masuk/:kode = 200).
+
+Frontend memanggil /api/masuk/:kode (bukan MOCK).
+
+Cache dimatikan (frontend no-store, backend etag off).
+
+8) Production Notes (singkat)
+
+Tambah security: helmet, rate-limit, validasi payload (zod/joi).
+
+Jalankan dengan PM2/Docker; gunakan prisma migrate deploy saat deploy.
+
+Backup DB terjadwal; monitoring health & logs.
