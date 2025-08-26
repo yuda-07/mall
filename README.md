@@ -145,40 +145,26 @@ Contoh ringkas:
     # Pendapatan Mingguan (untuk Chart.js)
     irm "http://localhost:4000/api/statistik/pendapatan?range=week"
 
-6) Ringkasan Endpoint
+# 6) Ringkasan Endpoint
 
--- POST /api/masuk → catat gate-in.
+        -- POST /api/masuk → catat gate-in.
+        -- GET /api/masuk?start&end → rekap masuk (default hari ini).
+        -- GET /api/masuk/:kode → lookup tiket (dipakai halaman Transaksi → “Cari”).
+        -- POST /api/transaksi/pay → proses bayar + gate-out.
+        -- GET /api/transaksi/keluar?start&end → rekap keluar (default hari ini).
+        -- GET /api/statistik/pendapatan?range=today|week|custom&start&end → data grafik.
 
--- GET /api/masuk?start&end → rekap masuk (default hari ini).
+# 7) Troubleshooting Singkat
 
--- GET /api/masuk/:kode → lookup tiket (dipakai halaman Transaksi → “Cari”).
-
--- POST /api/transaksi/pay → proses bayar + gate-out.
-
--- GET /api/transaksi/keluar?start&end → rekap keluar (default hari ini).
-
--- GET /api/statistik/pendapatan?range=today|week|custom&start&end → data grafik.
-
-7) Troubleshooting Singkat
-
-P1000 (auth gagal) → periksa user/password, gunakan host 127.0.0.1, encode password saja.
-
-P1001 (tidak bisa connect) → MySQL belum start / port salah (3306/3307).
-
-PowerShell “-X/-H/-d” tidak dikenal → gunakan irm (Invoke-RestMethod) atau curl.exe.
-
-UI “Data struk tidak ditemukan” → pastikan:
-
-Kode yang dicari ada (GET /api/masuk/:kode = 200).
-
-Frontend memanggil /api/masuk/:kode (bukan MOCK).
-
-Cache dimatikan (frontend no-store, backend etag off).
-
+        P1000 (auth gagal) → periksa user/password, gunakan host 127.0.0.1, encode password saja
+        P1001 (tidak bisa connect) → MySQL belum start / port salah (3306/3307)
+        PowerShell “-X/-H/-d” tidak dikenal → gunakan irm (Invoke-RestMethod) atau curl.exe
+        UI “Data struk tidak ditemukan” → pastikan:
+        Kode yang dicari ada (GET /api/masuk/:kode = 200).
+        Frontend memanggil /api/masuk/:kode (bukan MOCK).
+        Cache dimatikan (frontend no-store, backend etag off).
 8) Production Notes (singkat)
 
-Tambah security: helmet, rate-limit, validasi payload (zod/joi).
-
-Jalankan dengan PM2/Docker; gunakan prisma migrate deploy saat deploy.
-
-Backup DB terjadwal; monitoring health & logs.
+        Tambah security: helmet, rate-limit, validasi payload (zod/joi).
+        Jalankan dengan PM2/Docker; gunakan prisma migrate deploy saat deploy.
+        Backup DB terjadwal; monitoring health & logs.
