@@ -1,0 +1,17 @@
+/* Layout utama */
+.layout {
+  display: flex; /* Membagi sidebar dan konten */
+  min-height: 100vh;
+}
+
+/* Konten utama */
+.main-content {
+  flex: 1; /* Ambil sisa, ruang */
+  padding: 20px 50px;
+  background: linear-gradient(#C2C9F2, #F2F2F2);
+
+}
+
+:root{
+  width:yuda(100%);
+}

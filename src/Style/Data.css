@@ -1,0 +1,106 @@
+   .wrap {
+     width: min(1200px, 96vw);
+     display: grid;
+     grid-template-columns: 60% 60%;
+     gap: 28px;
+     align-items: stretch;
+   }
+
+   .graph-card {
+     position: relative;
+     min-height: 320px;
+     padding: 24px;
+     border-radius: var(--radius);
+     background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+     box-shadow: var(--shadow);
+     overflow: hidden;
+   }
+
+   .graph-card::before {
+     /* dekor ringan ala glows */
+     content: "";
+     position: absolute;
+     inset: -30% -40% auto auto;
+     width: 120%;
+     height: 120%;
+     background: radial-gradient(closest-side, rgba(255, 255, 255, .15), transparent 70%);
+     transform: rotate(12deg);
+     pointer-events: none;
+   }
+
+   .graph-card canvas {
+     position: relative;
+     z-index: 1;
+     width: 100% !important;
+     height: 100% !important;
+   }
+   /*  */
+   .stats {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 20px;
+   }
+
+   .cardt {
+     background-color: #fff;
+     border-radius: var(--radius);
+     padding: 22px 26px;
+     box-shadow: var(--shadow);
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+   }
+
+   .label {
+     margin: 0 0 6px;
+     font-size: 13px;
+     font-weight: 600;
+     letter-spacing: .2px;
+    color: black;
+     text-transform: capitalize;
+   }
+
+   /* .value {
+     margin: 0;
+     font-size: 56px;
+     font-weight: 800;
+     line-height: 1;
+     letter-spacing: 1px;
+     text-shadow: 0 2px 0 rgba(0, 0, 0, .04);
+   } */
+
+   .value--in {
+    color: var(--green);
+    text-shadow: 0 0 12px rgba(17, 168, 26, .25);
+    font-size: 50px;
+    font-weight: 800;
+    line-height: 1;
+   }
+
+   .value--out {
+     color: var(--red);
+     text-shadow: 0 0 12px rgba(239, 28, 28, .25);
+     font-size: 50px;
+    font-weight: 800;
+    line-height: 1;
+   }
+
+   .value--blue {
+    color: black;
+     text-shadow: 0 0 12px rgba(26, 68, 255, .22);
+     font-size: 50px;
+    font-weight: 800;
+    line-height: 1;
+   }
+
+   @media (max-width: 920px) {
+     .wrap {
+       grid-template-columns: 1fr;
+     }
+
+     .graph-card {
+       min-height: 260px;
+     }
+   }

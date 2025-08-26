@@ -1,0 +1,202 @@
+    :root {
+      --grad-1: #5f2be3;
+      --grad-2: #8459ff;
+      --card-radius: 22px;
+      --paper-radius: 14px;
+      --shadow: 0 18px 30px rgba(0, 0, 0, .15);
+      --text: #111827;
+      --muted: #6b7280;
+      --green: #11a81a;
+      --red: #ef1c1c;
+      --blue: #1a44ff;
+      --radius: 22px;
+
+
+    }
+
+    html {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: bisque;
+    }
+
+    .Dashbord {
+      font-family: 'poppins', sans-serif;
+    }
+
+    .container {
+      display: grid;
+      gap: 10px;
+
+    }
+
+    .container h1 {
+      font-family: 'poppins', sans-serif;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .pencarian {
+      margin-bottom: 20px;
+
+
+    }
+
+    .container input {
+      width: 65vh;
+      height: 3vh;
+      border-radius: 10px;
+      border: none;
+      padding-left: 10px;
+    }
+
+    .container button {
+      width: 8.7vh;
+      height: 3vh;
+      border-radius: 10px;
+      border: none;
+      text-align: center;
+    }
+
+
+    .parent {
+      width: 100%;
+    }
+
+
+    /* Data Masuk dan Data Keluar  mulai  */
+    .Grid {
+      width: 100%;
+      max-width: 12000px;
+      display: grid;
+      gap: 28px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: radial-gradient(120% 140% at 50% -10%, var(--grad-2), var(--grad-1));
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .title {
+      text-align: center;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .2px;
+      margin: 4px 0 14px;
+      font-size: 15px;
+    }
+
+    .paper {
+      background: #fff;
+      border-radius: var(--paper-radius);
+      padding: 14px 14px 6px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .12);
+      position: relative;
+    }
+
+    /* Garis-garis halus seperti kertas */
+    .paper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--paper-radius);
+      mask: linear-gradient(#000 0 0) padding-box;
+    }
+
+    .table-wrap {
+      max-height: 240px;
+      /* tinggi area scroll */
+      overflow: auto;
+      position: relative;
+      z-index: 1;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 14px;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 2;
+      text-align: left;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 10px 12px;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+
+    tbody tr:hover td {
+      background: #f7f7ff;
+    }
+
+    /* Scrollbar halus (WebKit) */
+    .table-wrap::-webkit-scrollbar {
+      height: 10px;
+      width: 10px
+    }
+
+    .table-wrap::-webkit-scrollbar-track {
+      background: #f1f1f7;
+      border-radius: 10px
+    }
+
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: #c7c8ff;
+      border-radius: 10px
+    }
+
+    .table-wrap::-webkit-scrollbar-thumb:hover {
+      background: #b0b2ff
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    /* data masuk dan data keluar selesai  */
+
+
+    .yudaa {
+      display: grid;
+      max-width: 12000px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 28px;
+      border-radius: 20px;
+      background-color: #5f2be3;
+      text-align: center;
+    }
+
+    .div2 {
+      grid-column: span 5 / span 5;
+      grid-row: span 2 / span 2;
+      grid-row-start: 4;
+    }

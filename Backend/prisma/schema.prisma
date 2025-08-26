@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Jenis {
+  Motor
+  Mobil
+}
+
+enum MetodePembayaran {
+  CASH
+  QRIS
+  EMONEY
+  DEBIT
+}
+
+model GateMasuk {
+  id         String     @id @default(cuid())
+  kode       String     @unique
+  jenis      Jenis
+  plat       String
+  gateIn     String
+  jamMasuk   DateTime   // simpan UTC
+  operatorIn String?
+
+  transaksi  Transaksi?
+  @@index([jamMasuk])
+}
+
+model Transaksi {
+  id            String            @id @default(cuid())
+  kode          String            @unique
+  gateOut       String
+  jamKeluar     DateTime          // simpan UTC
+  durasiMenit   Int
+  jamDibulatkan Int
+  tarifPerJam   Int
+  totalBayar    Int
+  metode        MetodePembayaran
+  tunaiDiterima Int?
+  kembalian     Int?
+  operatorOut   String?
+
+  masuk         GateMasuk         @relation(fields: [kode], references: [kode])
+
+  @@index([jamKeluar])
+}

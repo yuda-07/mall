@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+.Sidebar{
+    width: 354px;
+    background: linear-gradient(#420095, #210F4B);
+    color: #fff;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    font-family: 'poppins',sans-serif;
+}
+
+.Sidebar h2{
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+}
+
+.Sidebar  .yuda{
+    list-style: none;
+    padding: 0;
+
+
+}
+
+
+.Sidebar  .yuda div{
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+.Sidebar  .yuda div .navbar{
+    text-decoration: none;
+    color: #fff;
+    font-family: 'poppins',sans-serif;
+    display: block;
+    font-weight: 800;
+    transition: all 0.3s ease; /* Animasi halus */
+    width: 100%;
+     padding: 10px; /* Biar ada ruang di sekitar teks */
+}
+.navbar:hover{
+    background: #241E40;
+    border-radius: 20px;
+    transition: all 0.3s ease; /* Animasi halus */
+    padding-left: 20px;
+
+}
