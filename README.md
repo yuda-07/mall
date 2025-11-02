@@ -169,7 +169,9 @@ Contoh ringkas:
         Jalankan dengan PM2/Docker; gunakan prisma migrate deploy saat deploy.
         Backup DB terjadwal; monitoring health & logs.
 9) contoh pembuatan struk
+
+    
             $json=@'
-      { "kode":"A1B253", "jenis":"Mobil", "plat":"B 1234 CD", "gateIn":"Pintu Masuk B" }
-      '@
-      irm http://localhost:4000/api/masuk -Method Post -ContentType 'application/json' -Body $json
+        { "kode":"A1B253", "jenis":"Mobil", "plat":"B 1234 CD", "gateIn":"Pintu Masuk B" }
+        '@
+        irm http://localhost:4000/api/masuk -Method Post -ContentType 'application/json' -Body $json
